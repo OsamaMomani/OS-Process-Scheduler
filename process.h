@@ -70,7 +70,12 @@ public:
         this->name = name;
         this->atime = atime;
         this->ptime = ptime;
-        setpid();
+
+        setpid(); 
+        //In Unix-like operating systems a process gets its PID right after creation 
+        //Therefore, the PID sequence may differ from the actual order of execution
+        //Check linux/include/linux/pid.h and Wikipedia page on Process identifier        
+        
         setState(1);
     }
     /**
@@ -80,10 +85,10 @@ public:
      */
     friend std::ostream &operator<<(std::ostream &os, const Process &process)
     {
-        os << "Name: " << process.name << "\t PID: " << process.pid
-           << "\nArrival time: " << process.atime << "\tProcessing time: " << process.ptime
-           << "\nState: " << process.state << " " << process.stateToString
-           << "\npidStore: " << process.pidStore << "\tValue: " << *process.pidStore;
+        os << "Name: " << process.name << "\t\t\t\t\t | PID: " << process.pid
+           << "\nArrival time: " << process.atime << "\t\t\t | Processing time: " << process.ptime
+           << "\npidStore: " << process.pidStore << " | Value: " << *process.pidStore
+           << "\nState: " << process.state << " " << process.stateToString;
         return os;
     }
     string getName(){
@@ -93,6 +98,12 @@ public:
         atime=this->atime;
         ptime=this->ptime;
     }
+    ~Process(){
+        pidStore[pid]=0; // release pid
+        setState(0); // terminated
+    }
     friend struct CompareATime;
     friend struct ComparePTime;
 };
+
+void scheduler(Process *ps, unsigned int len, int algo);

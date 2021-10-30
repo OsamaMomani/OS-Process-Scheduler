@@ -1,8 +1,7 @@
 #include "process.h"
-#include "scheduler.cpp"
 
 bool *Process::pidStore= new bool[1000]; // assuming 1000 is the maximum number of pids
-
+//The maximum value of the pid on a linux system can be found $cat /proc/sys/kernel/pid_max
 int main(){
     freopen("in.txt","r",stdin);
 

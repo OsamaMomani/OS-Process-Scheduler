@@ -1,3 +1,5 @@
+#include "process.h"
+
 struct CompareATime
 {
     bool operator()(Process const &p1, Process const &p2)
@@ -16,13 +18,13 @@ struct ComparePTime
 
 void scheduler(Process *ps, unsigned int len, int algo)
 {
-    ofstream logout("log.txt", std::ios_base::app); // append to log file
+    ofstream log("log.txt", std::ios_base::app); // append to log file
     ofstream out("out.txt");                        // create out file
     // get run date
     time_t now = time(0);
     char *dt = ctime(&now);
 
-    logout << "\n++++++++++++++++++++++ Start Logging ++++++++++++++++++++++\n\t" << dt << endl;
+    log << "\n++++++++++++++++++++++ Start Logging ++++++++++++++++++++++\n\t" << dt << endl;
     switch (algo)
     {
     case 1:
@@ -55,9 +57,10 @@ void scheduler(Process *ps, unsigned int len, int algo)
             response=delay=current-atime>0? current-atime : 0;
             current += ptime;
             turnaround=delay+ptime;
-            out << p.getName() << ": (response=" << response << ", turnaround=" << turnaround << ", delay=" << delay << ")\n";
-            logout << "\n------------------------\n"
-            << p << endl;
+            out << p.getName() << ": (response=" << response << 
+            ", turnaround=" << turnaround << 
+            ", delay=" << delay << ")\n";
+            log << "\n------------------------\n"<< p << endl;
             q1.pop();
         }
         break;
