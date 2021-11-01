@@ -24,7 +24,7 @@ void scheduler(Process *ps, unsigned int len, int algo)
     time_t now = time(0);
     char *dt = ctime(&now);
 
-    log << "\n++++++++++++++++++++++ Start Logging ++++++++++++++++++++++\n\t" << dt << endl;
+    log << "\n===================== Start Logging =====================\n\t" << dt << endl;
     switch (algo)
     {
     case 1:
@@ -47,20 +47,20 @@ void scheduler(Process *ps, unsigned int len, int algo)
         out<<endl;
 
         // (B) print processes details by order
-        int current = 0; // current instance of time
         for (int i = 0; i < len; ++i)
         {
             Process p = q1.top();
 
             int response, turnaround, delay, atime, ptime;
             p.getTime(atime, ptime);
+            int static current = atime ; // current instance of time
             response=delay=current-atime>0? current-atime : 0;
             current += ptime;
             turnaround=delay+ptime;
             out << p.getName() << ": (response=" << response << 
             ", turnaround=" << turnaround << 
             ", delay=" << delay << ")\n";
-            log << "\n------------------------\n"<< p << endl;
+            log << p << endl;
             q1.pop();
         }
         break;

@@ -3,6 +3,7 @@
 #include <queue>
 #include <fstream>
 #include <ctime>
+#include <iomanip>
 
 using namespace std;
 
@@ -85,10 +86,15 @@ public:
      */
     friend std::ostream &operator<<(std::ostream &os, const Process &process)
     {
-        os << "Name: " << process.name << "\t\t\t\t\t | PID: " << process.pid
-           << "\nArrival time: " << process.atime << "\t\t\t | Processing time: " << process.ptime
-           << "\npidStore: " << process.pidStore << " | Value: " << *process.pidStore
-           << "\nState: " << process.state << " " << process.stateToString;
+        os <<"\t" <<right << setw(50) << setfill('_')<<"\n"
+           <<left << setw(25) << setfill(' ')
+           << "\tName: " + process.name << "| PID: " << process.pid
+           <<endl<<left << setw(25) << setfill(' ')
+           << "\tArrival time: " + to_string(process.atime) << "| Processing time: " << process.ptime
+           <<endl<<left << setw(25) << setfill(' ')
+           << "\tpidStore: " + to_string((long long)process.pidStore) << "| Value: " << *process.pidStore
+           <<endl<<right << setw(30) << setfill(' ')
+           << "State: "  + to_string(process.state) << " " << process.stateToString<<endl;
         return os;
     }
     string getName(){
