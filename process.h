@@ -105,7 +105,6 @@ public:
         ptime=this->ptime;
     }
     ~Process(){
-        pidStore[pid]=0; // release pid
         setState(0); // terminated
     }
     friend struct CompareATime;
