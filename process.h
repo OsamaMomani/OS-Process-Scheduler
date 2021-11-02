@@ -92,7 +92,7 @@ public:
            <<endl<<left << setw(25) << setfill(' ')
            << "\tArrival time: " + to_string(process.atime) << "| Processing time: " << process.ptime
            <<endl<<left << setw(25) << setfill(' ')
-           << "\tpidStore: " + to_string((long long)process.pidStore) << "| Value: " << *process.pidStore
+           << "\tpidStore: " + to_string((long long)process.pidStore) << "| Value: " << process.pidStore[pid-100]
            <<endl<<right << setw(30) << setfill(' ')
            << "State: "  + to_string(process.state) << " " << process.stateToString<<endl;
         return os;
